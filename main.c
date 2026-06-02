@@ -1,18 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-
-#define MAX_SIZE 5
-
-const char SEPARATOR[] = "---------------\n";
-
-struct Item {
-    bool done;
-    char title[50];
-};
-
-struct Item list[MAX_SIZE];
-int size = 0;
+#include "list.h"
 
 void clearBuffer() {
     int c;
@@ -36,47 +25,13 @@ int print_menu() {
     return option;
 }
 
-void print_item_prefixed(char prefix[], struct Item item) {
-    if (prefix != NULL) {
-        printf("%s", prefix);
-    }
-
-    if (item.done) {
-        printf("[x]");
-    } else {
-        printf("[ ]");
-    }
-
-    printf(" %s\n", item.title);
-}
-
-void print_item(struct Item item) {
-    print_item_prefixed(NULL, item);
-}
-
-void show_list() {
-    if (size == 0) {
-        printf("List is empty\n");
-        printf(SEPARATOR);
-        return;
-    }
-    printf("Showing List:\n");
-
-    for (int x = 0; x < size; x++) {
-        print_item(list[x]);
-    }
-
-    printf(SEPARATOR);
-}
-
 void add() {
+    int size = get_size();
     if (size == MAX_SIZE) {
         printf("List is at max size, unable to add more items\n");
         printf(SEPARATOR);
         return;
     }
-    size++;
-    int index = size - 1;
 
     printf("Title: ");
 
@@ -86,20 +41,15 @@ void add() {
 
     printf(SEPARATOR);
 
-    list[index].done = false;
-    strcpy(list[index].title, title);
-}
-
-void check_item(int index) {
-    bool done = list[index].done;
-    list[index].done = !done;
+    add_item(title);
 }
 
 void check() {
+    int size = get_size();
     for (int x = 0; x < size; x++) {
         char prefix[4];
         snprintf(prefix, 4, "%d: ", x + 1);
-        print_item_prefixed(prefix, list[x]);
+        print_item_prefixed(prefix, x);
     }
 
     printf("Pick a task to check:\n");
@@ -117,15 +67,8 @@ void check() {
     }
 }
 
-void remove_item_from_list(int index) {
-    for (int x = index + 1; x < size; x++) {
-        list[x - 1].done = list[x].done;
-        strcpy(list[x - 1].title, list[x].title);
-    }
-    size--;
-}
-
 void remove_item() {
+    int size = get_size();
     if (size == 0) {
         printf("List is empty\n");
         printf(SEPARATOR);
@@ -135,7 +78,7 @@ void remove_item() {
     for (int x = 0; x < size; x++) {
         char prefix[4];
         snprintf(prefix, 4, "%d: ", x + 1);
-        print_item_prefixed(prefix, list[x]);
+        print_item_prefixed(prefix, x);
     }
 
     printf("Pick a task to remove:\n");
