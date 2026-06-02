@@ -26,6 +26,7 @@ int print_menu() {
     printf("1: List\n");
     printf("2: Add\n");
     printf("3: Check\n");
+    printf("4: Remove\n");
     printf("5: Quit\n");
     printf("Enter Option: ");
     int option;
@@ -54,6 +55,11 @@ void print_item(struct Item item) {
 }
 
 void show_list() {
+    if (size == 0) {
+        printf("List is empty\n");
+        printf(SEPARATOR);
+        return;
+    }
     printf("Showing List:\n");
 
     for (int x = 0; x < size; x++) {
@@ -111,6 +117,42 @@ void check() {
     }
 }
 
+void remove_item_from_list(int index) {
+    for (int x = index + 1; x < size; x++) {
+        list[x - 1].done = list[x].done;
+        strcpy(list[x - 1].title, list[x].title);
+    }
+    size--;
+}
+
+void remove_item() {
+    if (size == 0) {
+        printf("List is empty\n");
+        printf(SEPARATOR);
+        return;
+    }
+
+    for (int x = 0; x < size; x++) {
+        char prefix[4];
+        snprintf(prefix, 4, "%d: ", x + 1);
+        print_item_prefixed(prefix, list[x]);
+    }
+
+    printf("Pick a task to remove:\n");
+
+    int option;
+    scanf("%d", &option);
+    clearBuffer();
+
+    if (option <= size) {
+        remove_item_from_list(option - 1);
+        show_list();
+    } else {
+        printf("Invalid choice: %d\n", option);
+        printf(SEPARATOR);
+    }
+}
+
 int main(void) {
     printf("TODO List\n");
     printf(SEPARATOR);
@@ -129,6 +171,8 @@ int main(void) {
                 check();
                 break;
             case 4:
+                remove_item();
+                break;
             case 5:
             default:
                 return 0;
