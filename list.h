@@ -17,7 +17,7 @@ struct Item get_item(int index);
 void print_item_prefixed(char prefix[], int index);
 void print_item(int index);
 void show_list();
-void add_item(char title[50]);
+void add_item(bool done, char title[50]);
 void check_item(int index);
 void remove_item_from_list(int index);
 

@@ -49,11 +49,11 @@ void show_list() {
     printf(SEPARATOR);
 }
 
-void add_item(char title[50]) {
+void add_item(bool done, char title[50]) {
     size++;
     int index = size - 1;
 
-    list[index].done = false;
+    list[index].done = done;
     strcpy(list[index].title, title);
 }
 

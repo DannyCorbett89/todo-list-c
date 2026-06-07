@@ -5,4 +5,6 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(todo_list_c main.c
         list.h
-        list.c)
+        list.c
+        storage.c
+        storage.h)

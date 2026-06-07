@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "list.h"
+#include "storage.h"
 
 void clearBuffer() {
     int c;
@@ -41,7 +42,8 @@ void add() {
 
     printf(SEPARATOR);
 
-    add_item(title);
+    add_item(false, title);
+    save();
 }
 
 void check() {
@@ -65,6 +67,7 @@ void check() {
         printf("Invalid choice: %d", option);
         printf(SEPARATOR);
     }
+    save();
 }
 
 void remove_item() {
@@ -94,9 +97,12 @@ void remove_item() {
         printf("Invalid choice: %d\n", option);
         printf(SEPARATOR);
     }
+    save();
 }
 
 int main(void) {
+    load();
+
     printf("TODO List\n");
     printf(SEPARATOR);
 
