@@ -12,6 +12,10 @@ int get_size() {
     return size;
 }
 
+struct Item get_item(int index) {
+    return list[index];
+}
+
 void print_item_prefixed(char prefix[], int index) {
     if (prefix != NULL) {
         printf("%s", prefix);

@@ -13,6 +13,7 @@ struct Item {
 };
 
 int get_size();
+struct Item get_item(int index);
 void print_item_prefixed(char prefix[], int index);
 void print_item(int index);
 void show_list();
